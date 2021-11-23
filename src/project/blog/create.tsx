@@ -1,8 +1,8 @@
-import { api_blogCreate } from "@/api/blog";
+import { api_blogCreate, api_blogEdit } from "@/api/blog";
 import MarkdownEditor from "@/component/markdownEditor";
 import blogStatusText from "@/config/blogStatus";
 import categories from "@/config/category";
-import { Button, FormControl, FormControlLabel, FormLabel, Link, Radio, RadioGroup, TextField } from "@mui/material";
+import { Button, Container, FormControl, FormControlLabel, Link, Radio, RadioGroup, TextField } from "@mui/material";
 import { Box, styled } from "@mui/system";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
@@ -18,8 +18,9 @@ const List = styled(Box)`
 `
 
 const BlogCreate: React.FC<{
+    edit?: boolean;
     defaultValue?: BlogEdit
-}> = ({ defaultValue = {
+}> = ({ edit = false, defaultValue = {
     id: 0,
     title: "",
     category: "0",
@@ -29,7 +30,7 @@ const BlogCreate: React.FC<{
     status: "0"
 } }) => {
         const navigate = useNavigate()
-        const { setValue, formState: { errors }, handleSubmit, control, watch } = useForm({
+        const { setValue, handleSubmit, control } = useForm({
             defaultValues: defaultValue
         })
 
@@ -37,8 +38,7 @@ const BlogCreate: React.FC<{
         useEffect(() => {
             setValue("content", contentValue)
         }, [contentValue])
-
-        const onSubmit = handleSubmit(async (data) => {
+        const onSubmit = !edit ? handleSubmit(async (data) => {
             let { id = 0, msg } = await api_blogCreate(data);
             if (id) {
                 toast.success(msg)
@@ -46,43 +46,55 @@ const BlogCreate: React.FC<{
                 return
             }
             toast.error(msg)
+        }) : handleSubmit(async (data) => {
+            let { effectRows, msg } = await api_blogEdit(data)
+            if (effectRows < 0) {
+                toast.error(msg)
+            } else if (effectRows === 0) {
+                toast.warn("无改动")
+            } else {
+                toast.success(msg)
+                navigate(`/blog/detail/${data.id}`)
+            }
         })
 
         return <SecondaryBody>
-            <form>
-                <List>
-                    <Controller control={control} name="title" render={({ field }) => <TextField {...field} label="标题" required variant="filled" />} />
-                </List>
-                <List>
-                    <Controller control={control} name="summary" render={({ field }) => <TextField {...field} variant="filled" label="摘要" />} />
-                </List>
-                <List>
-                    <Controller control={control} name="category" render={({ field }) => <FormControl component="fieldset">
-                        <RadioGroup row aria-label="category" name="category" defaultValue={defaultValue.category}>
-                            {categories.map((item, index) => {
-                                return <FormControlLabel {...field} key={item} value={index} control={<Radio />} label={item} />
-                            })}
-                        </RadioGroup>
-                    </FormControl>} />
-                </List>
-                <List>
-                    <MarkdownEditor value={contentValue} onChange={({ target: { value } }) => setContentValue(value)} />
-                </List>
-                <List>
-                    <Controller control={control} name="thumb" render={({ field }) => <TextField {...field} variant="filled" label="封面图url" />} />
-                    <Link href="https://unsplash.com/" target="_blank">找图</Link>
-                </List>
-                <List>
-                    <Controller control={control} name="status" render={({ field }) => <FormControl component="fieldset">
-                        <RadioGroup row aria-label="status" name="status" defaultValue={defaultValue.status}>
-                            {blogStatusText.map((item, index) => {
-                                return <FormControlLabel {...field} key={item} value={index} control={<Radio />} label={item} />
-                            })}
-                        </RadioGroup>
-                    </FormControl>} />
-                </List>
-                <Button type="button" sx={{ bgcolor: "primary.main", ":hover": { bgcolor: "primary.light", } }} color="secondary" size="large" onClick={onSubmit}>发布</Button>
-            </form>
+            <Container maxWidth="xl" sx={{ px: { md: "50px" }, pb: 10 }}>
+                <form>
+                    <List>
+                        <Controller control={control} name="title" render={({ field }) => <TextField {...field} label="标题" required variant="filled" />} />
+                    </List>
+                    <List>
+                        <Controller control={control} name="summary" render={({ field }) => <TextField {...field} variant="filled" label="摘要" />} />
+                    </List>
+                    <List>
+                        <Controller control={control} name="category" render={({ field }) => <FormControl component="fieldset">
+                            <RadioGroup row aria-label="category" name="category" defaultValue={defaultValue.category}>
+                                {categories.map((item, index) => {
+                                    return <FormControlLabel {...field} key={item} value={index} control={<Radio />} label={item} />
+                                })}
+                            </RadioGroup>
+                        </FormControl>} />
+                    </List>
+                    <List>
+                        <MarkdownEditor value={contentValue} onChange={({ target: { value } }) => setContentValue(value)} />
+                    </List>
+                    <List>
+                        <Controller control={control} name="thumb" render={({ field }) => <TextField {...field} variant="filled" label="封面图url" />} />
+                        <Link href="https://unsplash.com/" target="_blank">找图</Link>
+                    </List>
+                    <List>
+                        <Controller control={control} name="status" render={({ field }) => <FormControl component="fieldset">
+                            <RadioGroup row aria-label="status" name="status" defaultValue={defaultValue.status}>
+                                {blogStatusText.map((item, index) => {
+                                    return <FormControlLabel {...field} key={item} value={index} control={<Radio />} label={item} />
+                                })}
+                            </RadioGroup>
+                        </FormControl>} />
+                    </List>
+                    <Button type="button" sx={{ bgcolor: "primary.main", ":hover": { bgcolor: "primary.light", } }} color="secondary" size="large" onClick={onSubmit}>发布</Button>
+                </form>
+            </Container>
         </SecondaryBody>
     }
 

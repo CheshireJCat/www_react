@@ -1,9 +1,10 @@
-import { Outlet, Route, Routes } from "react-router";
+import { Route, Routes } from "react-router";
 
 import BlogList from "./list"
 import BlogDetail from "@/project/blog/detail";
 import BlogCreate from "./create";
 import BlogEdit from "./edit";
+import GoBack from "../layout/goBack";
 
 const Blog: React.FC = () => {
     return <>
@@ -13,7 +14,7 @@ const Blog: React.FC = () => {
             <Route path="detail/:id" element={<BlogDetail />}></Route>
             <Route path="edit/:id" element={<BlogEdit />}></Route>
         </Routes>
-        <Outlet />
+        <GoBack />
     </>
 }
 

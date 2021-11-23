@@ -1,5 +1,4 @@
-import { CopyrightOutlined } from "@mui/icons-material"
-import { Link, Stack, Typography } from "@mui/material"
+import { Link } from "@mui/material"
 import { Box } from "@mui/system"
 
 const Copyright: React.FC = () => {

@@ -1,7 +1,7 @@
 import CodeMirror from "codemirror"
 import "codemirror/lib/codemirror.css"
 import "codemirror/theme/yonce.css"
-import React, { useEffect, useRef, useState } from "react"
+import React, { useEffect, useRef } from "react"
 
 const mobile =
     typeof navigator === 'undefined' ||

@@ -1,6 +1,6 @@
 import { api_blogDelete, api_blogUpdateStatus, useDataBlogList } from "@/api/blog"
 import useLogined from "@/hook/useLogined"
-import { Add, DeleteForeverOutlined, EditOutlined, PublishOutlined, VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material"
+import { Add, DeleteForeverOutlined, EditOutlined, VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material"
 import { Button, Divider, Grid, Paper, Stack, Typography, IconButton, Skeleton, Box } from "@mui/material"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
@@ -56,7 +56,7 @@ const BlogList: React.FC = () => {
             </Box>
             <Box sx={{ flexGrow: 1, overflow: "auto" }}>
                 {!loading ?
-                    list.map(({ Id, Title, Summary, Thumb, Status, UpdateTime, LikeNum }) => {
+                    list.map(({ Id, Title, Summary, Thumb, Status, UpdateTime }) => {
                         return <Paper sx={{
                             mb: 3,
                             background: `url(${Thumb}) no-repeat`,
@@ -69,14 +69,14 @@ const BlogList: React.FC = () => {
                                         <Typography variant="h5">{Title}</Typography>
                                         <Typography variant="subtitle1" fontSize={14}>{UpdateTime}</Typography>
                                         {Summary && <Typography variant="body2" fontSize={16}>{Summary}</Typography>}
-                                        {logined &&
-                                            <Stack direction="row" justifyContent="flex-end">
-                                                {Status !== 1 && <IconButton size="small" aria-label="show" color="secondary" onClick={() => updateBlog(Id, 1)}>{Status === 0 ? <PublishOutlined /> : <VisibilityOutlined />}</IconButton>}
-                                                {Status === 1 && <IconButton size="small" aria-label="hide" color="secondary" onClick={() => updateBlog(Id, 2)}><VisibilityOffOutlined /></IconButton>}
-                                                <Link to={`/blog/edit/${Id}`}><IconButton size="small" aria-label="edit" color="secondary"><EditOutlined /></IconButton></Link>
-                                                <IconButton size="small" aria-label="delete" color="secondary" onClick={() => deleteBlog(Id)}><DeleteForeverOutlined /></IconButton>
-                                            </Stack>}
                                     </Link>
+                                    {logined &&
+                                        <Stack direction="row" justifyContent="flex-end">
+                                            {Status !== 1 && <IconButton title="公开" size="small" aria-label="show" color="secondary" onClick={() => updateBlog(Id, 1)}><VisibilityOffOutlined /></IconButton>}
+                                            {Status === 1 && <IconButton title="隐藏" size="small" aria-label="hide" color="secondary" onClick={() => updateBlog(Id, 2)}><VisibilityOutlined /></IconButton>}
+                                            <Link to={`/blog/edit/${Id}`}><IconButton size="small" aria-label="edit" color="secondary"><EditOutlined /></IconButton></Link>
+                                            <IconButton size="small" aria-label="delete" color="secondary" onClick={() => deleteBlog(Id)}><DeleteForeverOutlined /></IconButton>
+                                        </Stack>}
                                 </Grid>
 
                             </Grid>

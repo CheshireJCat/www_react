@@ -16,7 +16,7 @@ const BlogDetail: React.FC = () => {
     const { id = 0 } = useParams()
     const [loading, detail] = useDataBlogDetail(+id > 0 ? +id : 0);
     return <SecondaryBody>
-        <Container maxWidth="md" sx={{ mt: 2 }}>
+        <Container fixed sx={{ mt: 2 }}>
             {
                 loading ?
                     <>

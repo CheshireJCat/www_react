@@ -1,6 +1,6 @@
 import { api_logout } from "@/api/user"
 import { setLogined } from "@/hook/useLogined"
-import { Button, Container, Stack, Typography } from "@mui/material"
+import { Button, Stack } from "@mui/material"
 import { useNavigate } from "react-router"
 import { toast } from "react-toastify"
 import CenterBody from "../layout/centerBody"

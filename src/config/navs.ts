@@ -2,7 +2,7 @@ import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import ReceiptOutlinedIcon from "@mui/icons-material/ReceiptOutlined";
 import FaceRetouchingNaturalOutlinedIcon from "@mui/icons-material/FaceRetouchingNaturalOutlined";
 
-export default [
+const navs = [
   {
     to: "/",
     name: "Home",
@@ -19,3 +19,4 @@ export default [
     Icon: FaceRetouchingNaturalOutlinedIcon,
   },
 ];
+export default navs;

@@ -14,15 +14,14 @@ export default function QuickNav() {
         <Box sx={{
             position: 'fixed',
             bottom: { xs: 50, md: 'auto' },
-            right: { xs: 0, md: 'auto' },
+            right: { xs: 0, md: 16 },
             top: { md: 16, xs: 'auto' },
-            left: { md: 16, xs: 'auto' },
         }}>
             <SpeedDial
                 ariaLabel="菜单"
                 direction={mobile ? 'up' : 'down'}
                 // icon={<Home onClick={() => navigate(navs[0].to)} />}
-                icon={<CatchingPokemonOutlinedIcon />}
+                icon={<CatchingPokemonOutlinedIcon onClick={() => navigate(-1)} />}
             >
                 {navs.map(({ name, Icon, to }) => (
                     <SpeedDialAction
@@ -33,7 +32,7 @@ export default function QuickNav() {
                             }
                         }}
                         key={name}
-                        icon={<Icon sx={{ fontSize: 30 }} onClick={() => navigate(to)} />}
+                        icon={<Icon sx={{ fontSize: 30 }} onClick={() => navigate(to, { replace: name === "home" ? true : false })} />}
                         tooltipTitle={name}
                     />
                 ))}

@@ -1,3 +1,4 @@
+import { Grid } from "@mui/material"
 import { styled } from "@mui/material/styles"
 import CodeMirrorEditor from "./codemirror"
 import MarkdownShow from "./markdownShow"
@@ -16,13 +17,13 @@ const MarkdownEditor: React.FC<{
     value: string;
     onChange: (p: { target: { value: string } }) => void;
 }> = (props) => {
-    return <Main style={{ height: props.height }}>
-        <Editor>
+    return <Grid container style={{ height: props.height }} spacing={1}>
+        <Grid item md={6} xs={12}>
             <CodeMirrorEditor {...props} />
-        </Editor>
-        <Editor>
+        </Grid>
+        <Grid item md={6} xs={12}>
             <MarkdownShow value={props.value} />
-        </Editor>
-    </Main>
+        </Grid>
+    </Grid>
 }
 export default MarkdownEditor

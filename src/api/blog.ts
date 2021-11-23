@@ -97,6 +97,33 @@ export async function api_blogCreate(param: BlogEdit): Promise<{
   }
 }
 
+export async function api_blogEdit(param: BlogEdit): Promise<{
+  effectRows: number;
+  msg: string;
+}> {
+  try {
+    let res = await request(`/api/blog/update`, "POST", {
+      data: param,
+    });
+    if (res.code === 0) {
+      return {
+        effectRows: res?.data?.effectRows || 0,
+        msg: "修改成功",
+      };
+    }
+    return {
+      effectRows: -1,
+      msg: res.error || "",
+    };
+  } catch (error) {
+    alert(error);
+    return {
+      effectRows: -1,
+      msg: "网络通信失败",
+    };
+  }
+}
+
 export async function api_blogDelete(id: number): Promise<{
   effectRows: number;
   msg: string;
