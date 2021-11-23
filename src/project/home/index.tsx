@@ -38,6 +38,7 @@ const Home: React.FC = () => {
             </Box>
             <Stack direction="row" spacing={2}>
                 <Link to="/blog/list"><Button variant="outlined" color="success">博客</Button></Link>
+                <Link to="/ff14price" target="_blank"><Button variant="outlined" color="success">FF14物价</Button></Link>
                 <Link to="/about"><Button variant="outlined" color="success">关于我</Button></Link>
             </Stack>
         </Slogan>
