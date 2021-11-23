@@ -1,10 +1,10 @@
 interface BlogEdit extends Blog {
   id: number;
   title: string;
-  category: string;
+  category: number | string;
   summary: string;
   thumb: string;
-  status: string;
+  status: number | string;
   content: string;
 }
 

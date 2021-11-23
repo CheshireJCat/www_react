@@ -10,11 +10,11 @@ const BlogEdit: React.FC = () => {
     return loading ? <Loading /> : !detail ? <Empty /> : <BlogCreate defaultValue={{
         id: detail.Id,
         title: detail.Title,
-        category: detail.Category + "",
+        category: detail.Category,
         summary: detail.Summary,
         content: detail.Content,
         thumb: detail.Thumb,
-        status: detail.Status + ""
+        status: detail.Status
     }} />
 }
 

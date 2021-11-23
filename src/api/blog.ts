@@ -66,7 +66,6 @@ export function useDataBlogDetail(id: number): [boolean, BlogDetail | null] {
       setLoading(false);
       setRes(res);
     }
-    console.log(1234);
     getData();
   }, []);
   return [loading, res];

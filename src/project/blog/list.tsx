@@ -1,28 +1,11 @@
 import { api_blogDelete, api_blogUpdateStatus, useDataBlogList } from "@/api/blog"
-import Loading from "@/component/loading"
 import useLogined from "@/hook/useLogined"
-import { ContentInCenter } from "@/style"
-import { faBug, faEye, faEyeSlash, faFan, faFish, faPen, faPlus, faTimes } from "@fortawesome/free-solid-svg-icons"
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
+import { Add, DeleteForeverOutlined, EditOutlined, PublishOutlined, VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material"
+import { Button, Divider, Grid, Paper, Stack, Typography, IconButton, Skeleton, Box } from "@mui/material"
 import { Link } from "react-router-dom"
 import { toast } from "react-toastify"
-import styled from "styled-components"
+import CenterBody from "../layout/centerBody"
 
-const NewBlogBtn = styled(Link)`
-    position: fixed;
-    right: 10px;
-    bottom: 10px;
-    background: pink;
-    border-radius: 50%;
-    cursor: pointer;
-    width: 50px;
-    height: 50px;
-    ${ContentInCenter}
-`
-
-const Tools = styled.div`
-    color: #666;
-`
 const BlogList: React.FC = () => {
     const [loading, list, setList] = useDataBlogList()
     const logined = useLogined()
@@ -60,29 +43,53 @@ const BlogList: React.FC = () => {
     }
 
 
-    return <>
-        {
-            loading ? <Loading /> : <div>
-                {
+    return <CenterBody>
+        <Stack sx={{ height: "100%" }}>
+            <Box>
+                <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
+                    <Typography variant="h4">
+                        博客
+                    </Typography>
+                    <Link to="../create" ><Button variant="outlined" startIcon={<Add />} color="secondary">写博客</Button></Link>
+                </Stack>
+                <Divider sx={{ borderColor: "theme.palette.grey[900]", my: 2 }} />
+            </Box>
+            <Box sx={{ flexGrow: 1, overflow: "auto" }}>
+                {!loading ?
                     list.map(({ Id, Title, Summary, Thumb, Status, UpdateTime, LikeNum }) => {
-                        return <div key={Id}>
-                            <Link to={`/blog/detail/${Id}`}>
-                                <h3>{Title}</h3>
-                                {Summary && <div>{Summary}</div>}
-                                <div>{UpdateTime}</div>
-                            </Link>
-                            {logined && <Tools>
-                                <FontAwesomeIcon icon={Status === 1 ? faEye : Status === 2 ? faEyeSlash : faBug} onClick={() => updateBlog(Id, Status === 1 ? 2 : 1)} />
-                                <Link to={`/blog/edit/${Id}`}><FontAwesomeIcon icon={faFan} /></Link>
-                                <FontAwesomeIcon icon={faFish} onClick={() => deleteBlog(Id)} />
-                            </Tools>}
-                        </div>
-                    })
-                }
-            </div>
-        }
-        <NewBlogBtn to="../create"><FontAwesomeIcon icon={faPlus} color="#fff" /></NewBlogBtn>
-    </>
+                        return <Paper sx={{
+                            mb: 3,
+                            background: `url(${Thumb}) no-repeat`,
+                            backgroundSize: "cover"
+                        }} elevation={3} key={Id}>
+                            <Grid container sx={{ bgcolor: "rgba(255,255,255,.5)" }}>
+                                <Grid></Grid>
+                                <Grid item flexGrow="1" sx={{ p: 2 }}>
+                                    <Link style={{ color: "#000", textDecoration: "none" }} to={`/blog/detail/${Id}`}>
+                                        <Typography variant="h5">{Title}</Typography>
+                                        <Typography variant="subtitle1" fontSize={14}>{UpdateTime}</Typography>
+                                        {Summary && <Typography variant="body2" fontSize={16}>{Summary}</Typography>}
+                                        {logined &&
+                                            <Stack direction="row" justifyContent="flex-end">
+                                                {Status !== 1 && <IconButton size="small" aria-label="show" color="secondary" onClick={() => updateBlog(Id, 1)}>{Status === 0 ? <PublishOutlined /> : <VisibilityOutlined />}</IconButton>}
+                                                {Status === 1 && <IconButton size="small" aria-label="hide" color="secondary" onClick={() => updateBlog(Id, 2)}><VisibilityOffOutlined /></IconButton>}
+                                                <Link to={`/blog/edit/${Id}`}><IconButton size="small" aria-label="edit" color="secondary"><EditOutlined /></IconButton></Link>
+                                                <IconButton size="small" aria-label="delete" color="secondary" onClick={() => deleteBlog(Id)}><DeleteForeverOutlined /></IconButton>
+                                            </Stack>}
+                                    </Link>
+                                </Grid>
+
+                            </Grid>
+                        </Paper>
+                    }) :
+                    <>
+                        <Skeleton height={100} animation="wave" />
+                        <Skeleton height={100} animation="wave" />
+                        <Skeleton height={100} animation="wave" />
+                    </>}
+            </Box>
+        </Stack>
+    </CenterBody>
 }
 
 export default BlogList

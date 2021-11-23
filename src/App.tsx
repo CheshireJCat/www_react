@@ -1,4 +1,3 @@
-import GlobalStyle from "@/style/global";
 import "./style/index.css"
 import "react-toastify/dist/ReactToastify.min.css";
 import { ToastContainer } from "react-toastify";
@@ -7,11 +6,12 @@ import { TransitionGroup, CSSTransition } from "react-transition-group"
 
 import Blog from "@/project/blog"
 import Home from "@/project/home"
-import Nav from "./project/layout/nav";
 import About from "./project/about";
 import Login from "./project/login";
 import useLoginCheck from "./hook/useloginCheck";
 import Logout from "./project/login/logout";
+import QuickNav from "./project/layout/quickNav";
+import Copyright from "./project/layout/copyright";
 
 const routes = [{
   path: "/",
@@ -25,23 +25,21 @@ const routes = [{
   path: "/about",
   name: "about",
   Component: About
-}, {
-  path: "/login",
-  name: "login",
-  Component: Login
-}, {
-  path: "/logout",
-  name: "logout",
-  Component: Logout
 }]
+
+
 
 function App() {
   return (
     <>
-      <GlobalStyle />
       <BrowserRouter>
-        <Nav />
-        <Page />
+        <Routes>
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/logout" element={<Logout />}></Route>
+        </Routes>
+        <PageAnimate />
+        <Copyright />
+        <QuickNav />
       </BrowserRouter>
       <ToastContainer
         hideProgressBar={false}
@@ -72,7 +70,7 @@ const Page: React.FC = () => {
 const PageAnimate: React.FC = () => {
   useLoginCheck();
   const location = useLocation()
-  return <TransitionGroup style={{ position: "relative" }}>
+  return <TransitionGroup style={{ position: "relative", height: "100%", overflow: "hidden" }}>
     <CSSTransition key={location.key} classNames="page" timeout={300}>
       <Routes location={location}>
         {

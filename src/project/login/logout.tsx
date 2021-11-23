@@ -1,7 +1,9 @@
 import { api_logout } from "@/api/user"
 import { setLogined } from "@/hook/useLogined"
+import { Button, Container, Stack, Typography } from "@mui/material"
 import { useNavigate } from "react-router"
 import { toast } from "react-toastify"
+import CenterBody from "../layout/centerBody"
 
 const Logout = () => {
     const navigate = useNavigate();
@@ -16,7 +18,13 @@ const Logout = () => {
         })
     }
 
-    return <button type="button" onClick={logout}>logout</button>
+    return <CenterBody>
+        <Stack sx={{ height: '100%' }} justifyContent="center">
+            <Button onClick={logout} color="error" size="large">logout</Button>
+            <Button onClick={logout} color="error" size="large">logout</Button>
+            <Button onClick={logout} color="error" size="large">logout</Button>
+        </Stack>
+    </CenterBody>
 }
 
 
