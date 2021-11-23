@@ -50,7 +50,7 @@ const BlogList: React.FC = () => {
                     <Typography variant="h4">
                         博客
                     </Typography>
-                    <Link to="../create" ><Button variant="outlined" startIcon={<Add />} color="secondary">写博客</Button></Link>
+                    {logined && <Link to="../create" ><Button variant="outlined" startIcon={<Add />} color="secondary">写博客</Button></Link>}
                 </Stack>
                 <Divider sx={{ borderColor: "theme.palette.grey[900]", my: 2 }} />
             </Box>
