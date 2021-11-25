@@ -1,13 +1,18 @@
 import { api_blogDelete, api_blogUpdateStatus, useDataBlogList } from "@/api/blog"
+import Empty from "@/component/empty"
 import useLogined from "@/hook/useLogined"
-import { Add, DeleteForeverOutlined, EditOutlined, VisibilityOffOutlined, VisibilityOutlined } from "@mui/icons-material"
-import { Button, Divider, Grid, Paper, Stack, Typography, IconButton, Skeleton, Box } from "@mui/material"
-import { Link } from "react-router-dom"
+import { Add } from "@mui/icons-material"
+import { Button, Divider, Grid, Stack, Typography, Box } from "@mui/material"
+import { Link, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import CenterBody from "../layout/centerBody"
+import CategoryNavs, { CategoryNavsDraw } from "./categoryNavs"
+import ListCard from "./listCard"
 
 const BlogList: React.FC = () => {
-    const [loading, list, setList] = useDataBlogList()
+    const { cid = -1 } = useParams()
+    console.log(cid)
+    const [loading, list, setList, loadMore] = useDataBlogList(cid === -1 ? -1 : parseInt(cid))
     const logined = useLogined()
 
     const deleteBlog = async (id: number) => {
@@ -42,6 +47,12 @@ const BlogList: React.FC = () => {
         }
     }
 
+    function handleScroll(e: any) {
+        if (e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight < 1) {
+            console.log('end')
+            loadMore()
+        }
+    }
 
     return <CenterBody>
         <Stack sx={{ height: "100%" }}>
@@ -51,42 +62,28 @@ const BlogList: React.FC = () => {
                         博客
                     </Typography>
                     {logined && <Link to="../create" ><Button variant="outlined" startIcon={<Add />} color="secondary">写博客</Button></Link>}
+                    <CategoryNavsDraw />
                 </Stack>
                 <Divider sx={{ borderColor: "theme.palette.grey[900]", my: 2 }} />
             </Box>
-            <Box sx={{ flexGrow: 1, overflow: "auto" }}>
-                {!loading ?
-                    list.map(({ Id, Title, Summary, Thumb, Status, UpdateTime }) => {
-                        return <Paper sx={{
-                            mb: 3,
-                            background: `url(${Thumb}) no-repeat`,
-                            backgroundSize: "cover"
-                        }} elevation={3} key={Id}>
-                            <Grid container sx={{ bgcolor: "rgba(255,255,255,.5)" }}>
-                                <Grid></Grid>
-                                <Grid item flexGrow="1" sx={{ p: 2 }}>
-                                    <Link style={{ color: "#000", textDecoration: "none" }} to={`/blog/detail/${Id}`}>
-                                        <Typography variant="h5">{Title}</Typography>
-                                        <Typography variant="subtitle1" fontSize={14}>{UpdateTime}</Typography>
-                                        {Summary && <Typography variant="body2" fontSize={16}>{Summary}</Typography>}
-                                    </Link>
-                                    {logined &&
-                                        <Stack direction="row" justifyContent="flex-end">
-                                            {Status !== 1 && <IconButton title="公开" size="small" aria-label="show" color="secondary" onClick={() => updateBlog(Id, 1)}><VisibilityOffOutlined /></IconButton>}
-                                            {Status === 1 && <IconButton title="隐藏" size="small" aria-label="hide" color="secondary" onClick={() => updateBlog(Id, 2)}><VisibilityOutlined /></IconButton>}
-                                            <Link to={`/blog/edit/${Id}`}><IconButton size="small" aria-label="edit" color="secondary"><EditOutlined /></IconButton></Link>
-                                            <IconButton size="small" aria-label="delete" color="secondary" onClick={() => deleteBlog(Id)}><DeleteForeverOutlined /></IconButton>
-                                        </Stack>}
-                                </Grid>
-
-                            </Grid>
-                        </Paper>
-                    }) :
-                    <>
-                        <Skeleton height={100} animation="wave" />
-                        <Skeleton height={100} animation="wave" />
-                        <Skeleton height={100} animation="wave" />
-                    </>}
+            <Box sx={{ flexGrow: 1, overflow: "hidden" }}>
+                <Grid container sx={{ height: "100%", overflow: "hidden" }} spacing={2}>
+                    {/* list */}
+                    <Grid item xs={12} md={10} sx={{ height: "100%", overflow: "auto" }} onScroll={e => handleScroll(e)}>
+                        {!list.length ? (!loading ? <Empty /> : null) : <>
+                            {list.map((blog) => <ListCard key={blog.Id} {...{ blog, updateBlog, deleteBlog }} />)}
+                        </>}
+                        {loading && <Box sx={{ textAlign: "center" }}>loading...</Box>}
+                    </Grid>
+                    {/* category */}
+                    <Grid item xs={12} md={2} sx={{
+                        display: {
+                            md: "block"
+                        }
+                    }}>
+                        <CategoryNavs />
+                    </Grid>
+                </Grid>
             </Box>
         </Stack>
     </CenterBody>

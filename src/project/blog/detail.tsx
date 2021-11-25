@@ -5,6 +5,7 @@ import { Box, Container, Skeleton, Typography } from "@mui/material";
 import { styled } from "@mui/system";
 import { useParams } from "react-router"
 import SecondaryBody from "../layout/secondaryBody";
+import BlogInfo from "./infos";
 
 const ContentBox = styled(Box)`
     .markdown-body{
@@ -28,7 +29,7 @@ const BlogDetail: React.FC = () => {
                         <Skeleton height={30} />
                     </> : !detail ? <Empty /> : <div>
                         <Typography variant="h3">{detail.Title}</Typography>
-                        <Typography variant="caption">{detail.UpdateTime}</Typography>
+                        <BlogInfo tags={detail.Tags} time={detail.UpdateTime} categroy={detail.Category} />
                         <ContentBox>
                             <MarkdownShow value={detail.Content}></MarkdownShow>
                         </ContentBox>

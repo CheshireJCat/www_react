@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import request from "./request";
 
-export async function api_blogList(): Promise<{
+export async function api_blogList(
+  page = 1,
+  category = -1
+): Promise<{
   list: BlogListItem[];
   page: number;
   size: number;
@@ -15,10 +18,16 @@ export async function api_blogList(): Promise<{
     total: 0,
     totalPage: 0,
   };
+  let data: { page?: number; category?: number } = { page };
+  if (category >= 0) {
+    data = { page, category };
+  }
   try {
-    let res = await request("/api/blog/list");
+    let res = await request("/api/blog/list", "GET", {
+      data,
+    });
     if (res.code === 0) {
-      return res.data;
+      return { ...empty, ...res.data };
     }
     return empty;
   } catch (error) {
@@ -26,23 +35,51 @@ export async function api_blogList(): Promise<{
   }
 }
 
-export function useDataBlogList(): [
+export function useDataBlogList(
+  categoryId = -1
+): [
   boolean,
   BlogListItem[],
-  React.Dispatch<React.SetStateAction<BlogListItem[]>>
+  React.Dispatch<React.SetStateAction<BlogListItem[]>>,
+  () => void
 ] {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<BlogListItem[]>([]);
-  useEffect(() => {
-    async function getData() {
-      let res = await api_blogList();
-      let { list } = res;
-      setLoading(false);
-      setList(list);
+  const [page, setPage] = useState(1);
+  const [totalPage, setTotalPage] = useState(1);
+
+  const loadMore = () => {
+    if (page < totalPage) {
+      getData(page + 1);
     }
+  };
+
+  useEffect(() => {
+    reset();
     getData();
-  }, []);
-  return [loading, list, setList];
+  }, [categoryId]);
+
+  function reset() {
+    setLoading(false);
+    setList([]);
+    setPage(1);
+    setTotalPage(1);
+  }
+
+  async function getData(loadPage = 1) {
+    if (loading) return;
+    setLoading(true);
+    let res = await api_blogList(loadPage, categoryId);
+    let { list, page, totalPage } = res;
+    setLoading(false);
+    setList((prev) => {
+      return [...prev, ...list];
+    });
+    setPage(page);
+    setTotalPage(totalPage);
+  }
+
+  return [loading, list, setList, loadMore];
 }
 
 export async function api_blogDetail(id: number): Promise<BlogDetail | null> {
@@ -71,13 +108,24 @@ export function useDataBlogDetail(id: number): [boolean, BlogDetail | null] {
   return [loading, res];
 }
 
-export async function api_blogCreate(param: BlogEdit): Promise<{
+function preDealData(data: BlogEdit) {
+  data.title = data.title.trim();
+  data.tags = data.tags
+    .replaceAll("，", ",")
+    .split(",")
+    .map((item) => item.trim())
+    .filter((item) => item !== "")
+    .join(",");
+}
+
+export async function api_blogCreate(data: BlogEdit): Promise<{
   id: number;
   msg: string;
 }> {
+  preDealData(data);
   try {
     let res = await request(`/api/blog/create`, "POST", {
-      data: param,
+      data,
     });
     if (res.code === 0 && res?.data?.id > 0) {
       return {
@@ -97,13 +145,14 @@ export async function api_blogCreate(param: BlogEdit): Promise<{
   }
 }
 
-export async function api_blogEdit(param: BlogEdit): Promise<{
+export async function api_blogEdit(data: BlogEdit): Promise<{
   effectRows: number;
   msg: string;
 }> {
+  preDealData(data);
   try {
     let res = await request(`/api/blog/update`, "POST", {
-      data: param,
+      data,
     });
     if (res.code === 0) {
       return {

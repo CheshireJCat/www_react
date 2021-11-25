@@ -21,7 +21,7 @@ export default function QuickNav() {
                 ariaLabel="菜单"
                 direction={mobile ? 'up' : 'down'}
                 // icon={<Home onClick={() => navigate(navs[0].to)} />}
-                icon={<CatchingPokemonOutlinedIcon onClick={() => navigate(-1)} />}
+                icon={<CatchingPokemonOutlinedIcon />}
             >
                 {navs.map(({ name, Icon, to }) => (
                     <SpeedDialAction

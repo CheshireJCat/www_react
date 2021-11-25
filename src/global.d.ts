@@ -6,6 +6,7 @@ interface BlogEdit extends Blog {
   thumb: string;
   status: number | string;
   content: string;
+  tags: string;
 }
 
 interface BlogListItem extends Blog {
@@ -18,6 +19,7 @@ interface BlogListItem extends Blog {
   UserId: number;
   LikeNum: number;
   UpdateTime: string;
+  Tags: string;
 }
 
 interface BlogDetail extends BlogListItem {
@@ -25,3 +27,8 @@ interface BlogDetail extends BlogListItem {
   CommentNume: number;
   CreateTime: string;
 }
+
+type Tag = {
+  Id: number;
+  Text: string;
+};

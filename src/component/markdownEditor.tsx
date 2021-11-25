@@ -1,16 +1,6 @@
 import { Grid } from "@mui/material"
-import { styled } from "@mui/material/styles"
 import CodeMirrorEditor from "./codemirror"
 import MarkdownShow from "./markdownShow"
-
-const Main = styled("main")`
-    position: relative;
-    display: flex;
-`
-const Editor = styled("div")`
-    width: 50%;
-    overflow: auto;
-`
 
 const MarkdownEditor: React.FC<{
     height?: string;

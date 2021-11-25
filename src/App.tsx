@@ -37,7 +37,8 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/logout" element={<Logout />}></Route>
         </Routes>
-        <PageAnimate />
+        <Page />
+        {/* <PageAnimate /> */}
         <Copyright />
         <QuickNav />
       </BrowserRouter>
