@@ -43,7 +43,7 @@ const globalStyles = <GlobalStyles styles={createStyles((theme: Theme) => ({
       color: theme.palette.secondary.light
     }
   },
-  '.markdown-body a': {
+  '.page .markdown-body a': {
     color: theme.palette.primary.main
   }
 }))} />
