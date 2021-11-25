@@ -3,7 +3,7 @@ import request from "./request";
 
 export async function api_blogList(
   page = 1,
-  category = -1
+  category?: string
 ): Promise<{
   list: BlogListItem[];
   page: number;
@@ -18,8 +18,8 @@ export async function api_blogList(
     total: 0,
     totalPage: 0,
   };
-  let data: { page?: number; category?: number } = { page };
-  if (category >= 0) {
+  let data: { page?: number; category?: string } = { page };
+  if (category !== undefined) {
     data = { page, category };
   }
   try {
@@ -36,13 +36,13 @@ export async function api_blogList(
 }
 
 export function useDataBlogList(
-  categoryId = -1
+  categoryId?: string
 ): [
-  boolean,
-  BlogListItem[],
-  React.Dispatch<React.SetStateAction<BlogListItem[]>>,
-  () => void
-] {
+    boolean,
+    BlogListItem[],
+    React.Dispatch<React.SetStateAction<BlogListItem[]>>,
+    () => void
+  ] {
   const [loading, setLoading] = useState(false);
   const [list, setList] = useState<BlogListItem[]>([]);
   const [page, setPage] = useState(1);
@@ -53,6 +53,10 @@ export function useDataBlogList(
       getData(page + 1);
     }
   };
+
+  // useEffect(() => {
+  //   getData();
+  // }, []);
 
   useEffect(() => {
     reset();
@@ -95,13 +99,13 @@ export async function api_blogDetail(id: number): Promise<BlogDetail | null> {
 }
 
 export function useDataBlogDetail(id: number): [boolean, BlogDetail | null] {
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<BlogDetail | null>(null);
   useEffect(() => {
     async function getData() {
       let res = await api_blogDetail(id);
-      setLoading(false);
       setRes(res);
+      setLoading(false);
     }
     getData();
   }, []);

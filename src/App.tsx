@@ -4,7 +4,6 @@ import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 
-import Blog from "@/project/blog"
 import Home from "@/project/home"
 import About from "./project/about";
 import Login from "./project/login";
@@ -12,6 +11,10 @@ import useLoginCheck from "./hook/useloginCheck";
 import Logout from "./project/login/logout";
 import QuickNav from "./project/layout/quickNav";
 import Copyright from "./project/layout/copyright";
+import { lazy, Suspense } from "react";
+import Loading from "./component/loading";
+
+const LazyBlog = lazy(() => import("@/project/blog"))
 
 const routes = [{
   path: "/",
@@ -20,7 +23,7 @@ const routes = [{
 }, {
   path: "/blog/*",
   name: "blog",
-  Component: Blog
+  Component: LazyBlog
 }, {
   path: "/about",
   name: "about",
@@ -57,10 +60,15 @@ const Page: React.FC = () => {
   const location = useLocation()
   return <Routes location={location}>
     {
-      routes.map(({ path, Component }) => {
-        return <Route key={path} path={path} element={
+      routes.map(({ path, Component, name }) => {
+        return <Route key={name} path={path} element={
           <div className="page">
-            <Component />
+            {name === "blog"
+              ? <Suspense fallback={<Loading />}>
+                <Component />
+              </Suspense>
+              : <Component />
+            }
           </div>
         }></Route>
       })

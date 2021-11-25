@@ -32,7 +32,8 @@ export default function QuickNav() {
                             }
                         }}
                         key={name}
-                        icon={<Icon sx={{ fontSize: 30 }} onClick={() => navigate(to, { replace: name === "home" ? true : false })} />}
+                        onClick={() => navigate(to, { replace: name === "home" ? true : false })}
+                        icon={<Icon sx={{ fontSize: 30 }} />}
                         tooltipTitle={name}
                     />
                 ))}

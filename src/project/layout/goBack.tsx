@@ -4,8 +4,8 @@ import { Fab } from '@mui/material'
 
 const GoBack: React.FC = () => {
     const navigate = useNavigate()
-    return <Fab color="primary" aria-label="back" sx={{ position: "fixed", left: "16px", top: "16px", display: { md: "flex", xs: "none" } }}>
-        <ArrowBack onClick={() => navigate(-1)} />
+    return <Fab onClick={() => navigate(-1)} color="primary" aria-label="back" sx={{ position: "fixed", left: "16px", top: "16px", display: { md: "flex", xs: "none" } }}>
+        <ArrowBack />
     </Fab>
 }
 

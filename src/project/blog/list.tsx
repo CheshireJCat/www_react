@@ -10,9 +10,8 @@ import CategoryNavs, { CategoryNavsDraw } from "./categoryNavs"
 import ListCard from "./listCard"
 
 const BlogList: React.FC = () => {
-    const { cid = -1 } = useParams()
-    console.log(cid)
-    const [loading, list, setList, loadMore] = useDataBlogList(cid === -1 ? -1 : parseInt(cid))
+    const { cid } = useParams()
+    const [loading, list, setList, loadMore] = useDataBlogList(cid)
     const logined = useLogined()
 
     const deleteBlog = async (id: number) => {
@@ -49,7 +48,6 @@ const BlogList: React.FC = () => {
 
     function handleScroll(e: any) {
         if (e.target.scrollHeight - e.target.scrollTop - e.target.clientHeight < 1) {
-            console.log('end')
             loadMore()
         }
     }

@@ -83,7 +83,6 @@ const request = async (
     if (method === "GET") {
       url = !data ? url : combineGetQuery(url, data);
     } else {
-      console.log(contentType)
       requestParamas.body =
         typeof data === "string" ? data : formatBody(contentType, data);
     }
