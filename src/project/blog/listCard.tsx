@@ -16,7 +16,7 @@ const ListCard: React.FC<{
         background: `url(${Thumb}) center center no-repeat`,
         backgroundSize: "cover"
     }} elevation={3} key={Id}>
-        <Grid container sx={{ bgcolor: "rgba(255,255,255,.8)" }}>
+        <Grid container sx={{ bgcolor: "rgba(255,255,255,.86)" }}>
             <Grid></Grid>
             <Grid item flexGrow="1" sx={{ p: 2 }}>
                 <Link style={{ color: "#000", textDecoration: "none" }} to={`/blog/detail/${Id}`}>
