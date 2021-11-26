@@ -53,6 +53,11 @@ li {
   min-height: 300px;
 }
 
+.page .markdown-body {
+  color: #0d1117;
+  background-color: transparent;
+}
+
 .markdown-body img {
   max-width: 60% !important;
   margin: 0 auto;

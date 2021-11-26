@@ -5,8 +5,8 @@ import remarkSlug from 'remark-slug'
 import remarkToc from 'remark-toc'
 // 语法高亮
 import rehypeHighlight from 'rehype-highlight'
-import 'highlight.js/styles/agate.css'
 import 'github-markdown-css/github-markdown-dark.css'
+import 'highlight.js/styles/agate.css'
 // 支持html
 import rehypeRaw from 'rehype-raw'
 import ReactMarkdown from 'react-markdown'

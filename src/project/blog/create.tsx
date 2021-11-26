@@ -28,7 +28,7 @@ const BlogCreate: React.FC<{
     category: "0",
     summary: "",
     content: "## Table of Contents",
-    thumb: "https://source.unsplash.com/random",
+    thumb: "https://api.ghser.com/random/api.php",
     status: "1",
     tags: ""
 } }) => {
@@ -92,7 +92,9 @@ const BlogCreate: React.FC<{
                     </List>
                     <List>
                         <Controller control={control} name="thumb" render={({ field }) => <TextField {...field} variant="filled" label="封面图url" />} />
-                        <Link href="https://unsplash.com/" target="_blank">找图</Link>
+                        <Link sx={{ color: "#000!important" }} href="https://unsplash.com/" target="_blank">找图</Link> |
+                        <Link sx={{ color: "#000!important" }} href="https://sm.ms/" target="_blank">上传</Link>
+                        <Box>https://unsplash.com/id/1600x900</Box>
                     </List>
                     <List>
                         <Controller control={control} name="status" render={({ field }) => <FormControl component="fieldset">
