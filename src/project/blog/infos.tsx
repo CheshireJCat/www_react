@@ -7,7 +7,7 @@ const BlogInfo: React.FC<{
     tags: string;
     time: string;
 }> = ({ categroy, tags, time }) => {
-    return <Stack direction="row" spacing={1} my={1}>
+    return <Stack direction="row" spacing={1} my={1} flexWrap="wrap">
         <Chip size="small" label={categories.get(categroy)} />
         {time && <Divider orientation="vertical" flexItem />}
         <Chip size="small" label={time} />
