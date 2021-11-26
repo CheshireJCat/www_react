@@ -13,7 +13,7 @@ const ListCard: React.FC<{
     const logined = useLogined()
     return <Paper sx={{
         mb: 3,
-        background: `url(${Thumb}) no-repeat`,
+        background: `url(${Thumb}) center center no-repeat`,
         backgroundSize: "cover"
     }} elevation={3} key={Id}>
         <Grid container sx={{ bgcolor: "rgba(255,255,255,.8)" }}>
