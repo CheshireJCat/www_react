@@ -4,6 +4,7 @@ import { Box, styled } from "@mui/system"
 import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useMediaQuery, useTheme } from '@mui/material';
+import Pendulum from "../pendulum"
 
 const Cover = styled(Grid)`
     background: url(${CoverSvg}) center center no-repeat;
@@ -12,8 +13,9 @@ const Cover = styled(Grid)`
 `
 
 const Slogan = styled(styled(Grid)`
+    position: relative;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: center;
     align-items: center;
     font-size: 100px;
     color: #000;
@@ -36,6 +38,7 @@ const Home: React.FC = () => {
     const mobile = useMediaQuery(theme.breakpoints.down('md'));
     return <Grid container spacing={2} height={"100%"} px={10}>
         <Slogan item xs={12} md={8} >
+            <Pendulum />
             <Box>
                 {face}
             </Box>
