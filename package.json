@@ -17,6 +17,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/react-transition-group": "^4.4.4",
+    "animate.css": "^4.1.1",
     "codemirror": "^5.63.3",
     "customize-cra": "^1.0.0",
     "github-markdown-css": "^5.0.0",

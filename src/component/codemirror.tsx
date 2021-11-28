@@ -21,7 +21,7 @@ const CodeMirrorEditor: React.FC<{
     let editor = useRef<CodeMirror.EditorFromTextArea>()
 
     useEffect(() => {
-        if (!mobile && editorRef.current) {
+        if (editorRef.current) {
             editor.current = CodeMirror.fromTextArea(editorRef.current, {
                 ...props, theme: "yonce"
             })

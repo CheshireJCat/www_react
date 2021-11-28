@@ -54,10 +54,6 @@ export function useDataBlogList(
     }
   };
 
-  // useEffect(() => {
-  //   getData();
-  // }, []);
-
   useEffect(() => {
     reset();
     getData();

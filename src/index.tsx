@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import "animate.css"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, GlobalStyles, Theme } from '@mui/material';
 import { createStyles } from '@mui/styles';

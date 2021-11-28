@@ -32,5 +32,5 @@ export const api_userInfo = async (id: number) => {
   try {
     let res = await request("/api/user/info/" + id);
     return res;
-  } catch {}
+  } catch { }
 };

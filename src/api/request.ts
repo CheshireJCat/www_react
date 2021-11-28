@@ -1,17 +1,18 @@
+import { getToken, setToken } from "./token";
+
 type Method = "GET" | "POST" | "PUT" | "DELETE";
 type contentType =
   | "application/json"
   | "application/x-www-form-urlencoded"
-  | "application/x-www-form-urlencoded; charset=UTF-8"
   | "multipart/form-data";
 type OtherParamas = {
   credentials?: "omit" | "same-origin" | "include";
   contentType?: contentType;
   data?:
-    | {
-        [propName: string]: any;
-      }
-    | string;
+  | {
+    [propName: string]: any;
+  }
+  | string;
 };
 
 export const ContentType_json = "application/json";
@@ -27,7 +28,7 @@ function formatBody(
   let body = null;
   if (contentType === ContentType_json) {
     body = JSON.stringify(data);
-  } else if (contentType.includes(ContentType_form)) {
+  } else if (contentType === ContentType_form) {
     body = new URLSearchParams();
     for (let key of Object.keys(data)) {
       body.append(key, data[key]);
@@ -45,8 +46,8 @@ function combineGetQuery(
   url: string,
   data:
     | {
-        [propName: string]: any;
-      }
+      [propName: string]: any;
+    }
     | string
 ) {
   let pre = !url.includes("?") ? "?" : "&";
@@ -71,27 +72,35 @@ const request = async (
     contentType = ContentType_form,
     data = "",
   } = paramas || {};
-
+  let requestParamas: any = {
+    method,
+    credentials,
+    headers: {
+      "Content-Type": contentType,
+      "token": getToken()
+    },
+  };
+  if (method === "GET") {
+    url = !data ? url : combineGetQuery(url, data);
+  } else {
+    requestParamas.body =
+      typeof data === "string" ? data : formatBody(contentType, data);
+  }
   try {
-    let requestParamas: any = {
-      method,
-      credentials,
-      headers: {
-        "Content-Type": contentType,
-      },
-    };
-    if (method === "GET") {
-      url = !data ? url : combineGetQuery(url, data);
-    } else {
-      requestParamas.body =
-        typeof data === "string" ? data : formatBody(contentType, data);
-    }
     let res = await fetch(url, requestParamas);
     if (res.status === 200 && res.ok) {
-      return res.json();
+      try {
+        let json = await res.json();
+        setToken(json.token || "");
+        return json;
+      } catch {
+        return {
+          error: res.statusText
+        }
+      }
     } else {
       return {
-        error: res.statusText,
+        error: "res.statusText"
       };
     }
   } catch (error) {
@@ -100,5 +109,6 @@ const request = async (
     };
   }
 };
+
 
 export default request;

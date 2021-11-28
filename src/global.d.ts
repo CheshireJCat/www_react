@@ -19,6 +19,7 @@ interface BlogListItem extends Blog {
   UserId: number;
   LikeNum: number;
   UpdateTime: string;
+  CreateTime: string;
   Tags: string;
 }
 

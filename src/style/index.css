@@ -52,6 +52,17 @@ li {
   min-height: 300px;
 }
 
+/* 动画 */
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
 .page .markdown-body {
   color: #0d1117;
   background-color: transparent;
@@ -69,6 +80,10 @@ li {
 
 .markdown-body blockquote {
   background: #222;
+}
+
+.markdown-body table {
+  background: #ccc;
 }
 
 /* 滚动条 */

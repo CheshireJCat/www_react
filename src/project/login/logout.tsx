@@ -1,5 +1,4 @@
 import { api_logout } from "@/api/user"
-import { setLogined } from "@/hook/useLogined"
 import { Button, Stack } from "@mui/material"
 import { useNavigate } from "react-router"
 import { toast } from "react-toastify"
@@ -10,7 +9,6 @@ const Logout = () => {
     const logout = function () {
         api_logout().then(errMsg => {
             if (!errMsg) {
-                setLogined(false)
                 navigate(-1)
                 return
             }

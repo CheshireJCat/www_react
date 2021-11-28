@@ -1,5 +1,4 @@
 import { api_login } from "@/api/user"
-import { setLogined } from "@/hook/useLogined"
 import { useState } from "react"
 import { useHotkeys } from "react-hotkeys-hook"
 import { useNavigate } from "react-router"
@@ -16,21 +15,20 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 
 export function SignInSide() {
     const navigate = useNavigate();
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(true);
     const [email, setEmail] = useState("1234@qq.com");
     const [password, setPassword] = useState("12345678");
-    const hotkey = process.env.REACT_APP_LOGIN_HOTKEY2 || "";
-    useHotkeys(hotkey, () => setShow(true));
+    // const hotkey = process.env.REACT_APP_LOGIN_HOTKEY2 || "";
+    // useHotkeys(hotkey, () => setShow(true));
 
     const login = function () {
         api_login(email, password).then(errMsg => {
             if (!errMsg) {
-                setLogined(true)
                 navigate(-1)
+                toast.success("登录成功")
                 return
             }
             toast.error(errMsg)
-            setLogined(false)
         })
     }
 

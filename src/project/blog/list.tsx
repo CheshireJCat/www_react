@@ -56,7 +56,7 @@ const BlogList: React.FC = () => {
         <Stack sx={{ height: "100%" }}>
             <Box>
                 <Stack direction="row" justifyContent="space-between" alignItems="flex-end">
-                    <Typography variant="h4">
+                    <Typography variant="h4" className="animate__animated animate__fadeIn">
                         博客
                     </Typography>
                     {logined && <Link to="../create" ><Button variant="outlined" startIcon={<Add />} color="secondary">写博客</Button></Link>}
@@ -67,9 +67,9 @@ const BlogList: React.FC = () => {
             <Box sx={{ flexGrow: 1, overflow: "hidden" }}>
                 <Grid container sx={{ height: "100%", overflow: "hidden" }} spacing={2}>
                     {/* list */}
-                    <Grid item xs={12} md={10} sx={{ height: "100%", overflow: "auto" }} onScroll={e => handleScroll(e)}>
+                    <Grid item xs={12} md={10} sx={{ height: "100%", overflow: "auto", overflowX: "hidden" }} onScroll={e => handleScroll(e)}>
                         {!list.length ? (!loading ? <Empty /> : null) : <>
-                            {list.map((blog) => <ListCard key={blog.Id} {...{ blog, updateBlog, deleteBlog }} />)}
+                            {list.map((blog, index) => <ListCard key={blog.Id} index={index} {...{ blog, updateBlog, deleteBlog }} />)}
                         </>}
                         {loading && <Box sx={{ textAlign: "center" }}>loading...</Box>}
                     </Grid>

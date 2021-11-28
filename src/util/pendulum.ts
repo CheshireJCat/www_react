@@ -111,7 +111,6 @@ export default class Visualization {
             width,
             height
         };
-        console.log(width, height)
 
         this.trail = [];
         this.batchSize = 10;

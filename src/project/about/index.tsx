@@ -11,9 +11,9 @@ const About: React.FC = () => {
     return <CenterBody sx={{ py: 3 }}>
         <Paper sx={{ background: `url("https://source.unsplash.com/900x1600/?cat") no-repeat center`, backgroundSize: "cover", height: "100%" }}>
             <Box sx={{ p: 2, background: 'rgba(255,255,255,.8)', height: "100%" }}>
-                <Typography variant="h3">About</Typography>
+                <Typography variant="h3" className="animate__animated animate__fadeIn">About</Typography>
                 <Divider />
-                <List sx={{ color: "#000" }}>
+                <List sx={{ color: "#000" }} className="animate__animated animate__fadeIn">
                     <ListItem>
                         <ListItemIcon><Star /></ListItemIcon>
                         <Text>程序猿 / 动漫 / 最终幻想14 光之战士 / 岛村抱月yyds / 有猫 </Text>
