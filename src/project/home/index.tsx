@@ -53,9 +53,9 @@ const Home: React.FC = () => {
     const [face, setFace] = useState(genFace())
     const theme = useTheme()
     const mobile = useMediaQuery(theme.breakpoints.down('md'));
-    return <Grid container spacing={2} height={"100%"} px={10}>
+    return <Grid container height={"100%"} sx={{ px: { xs: 0, md: 10 } }}>
         <Slogan item xs={12} md={8} >
-            <Pendulum />
+            {!mobile && <Pendulum />}
             <Box className="animate__animated animate__tada">
                 {face}
             </Box>
@@ -70,7 +70,7 @@ const Home: React.FC = () => {
         <Grid item xs={12} md={4} onClick={() => setFace(genFace())} >
             <Cover />
         </Grid>
-    </Grid>
+    </Grid >
 }
 
 export default Home

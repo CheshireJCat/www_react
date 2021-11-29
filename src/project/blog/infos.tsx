@@ -9,7 +9,7 @@ const BlogInfo: React.FC<{
     updateTime: string;
     className?: string;
 }> = ({ categroy, tags, createTime, updateTime, className }) => {
-    return <Stack direction="row" spacing={1} my={1} flexWrap="wrap" className={className}>
+    return <Stack direction="row" spacing={1} rowGap={1} my={1} flexWrap="wrap" className={className}>
         <Chip size="small" label={categories.get(categroy)} />
         {createTime && <>
             <Divider orientation="vertical" flexItem />

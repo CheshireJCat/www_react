@@ -8,7 +8,7 @@ const Tags: React.FC<{
     return <>
         {tags.map(id => {
             let text = tagMap.get(id)
-            return text ? <Chip key={id} size="small" label={tagMap.get(id)} /> : null
+            return text ? <Chip key={id} sx={{ my: 2 }} size="small" label={tagMap.get(id)} /> : null
         })}
     </>
 }
