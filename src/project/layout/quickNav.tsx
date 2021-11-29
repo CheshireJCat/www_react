@@ -13,16 +13,25 @@ export default function QuickNav() {
     return (
         <Box sx={{
             position: 'fixed',
-            bottom: { xs: 50, md: 'auto' },
-            right: { xs: 0, md: 16 },
+            bottom: { xs: 5, md: 'auto' },
+            right: { xs: 5, md: "auto" },
+            left: { xs: "auto", md: 16 },
             top: { md: 16, xs: 'auto' },
+            zIndex: 10,
         }}>
             <SpeedDial
+                sx={{
+                    ".MuiSpeedDial-fab": {
+                        backgroundColor: "secondary.main",
+                        width: "40px",
+                        height: "40px"
+                    }
+                }}
                 ariaLabel="菜单"
                 direction={mobile ? 'up' : 'down'}
-                // icon={<Home onClick={() => navigate(navs[0].to)} />}
                 icon={<CatchingPokemonOutlinedIcon />}
             >
+
                 {navs.map(({ name, Icon, to }) => (
                     <SpeedDialAction
                         sx={{

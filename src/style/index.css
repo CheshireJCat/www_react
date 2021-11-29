@@ -5,6 +5,10 @@ body,
   height: 100%;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 ul,
 ol,
 li {
@@ -15,8 +19,10 @@ li {
 /* 路由切换动画 */
 .page {
   position: absolute;
+  top: 0;
   left: 0;
-  right: 0;
+  width: 100%;
+  padding-bottom: 50px;
   transform-origin: center center;
 }
 
@@ -52,19 +58,8 @@ li {
   min-height: 300px;
 }
 
-/* 动画 */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-  }
-
-  to {
-    opacity: 1;
-  }
-}
-
 .page .markdown-body {
-  color: #0d1117;
+  color: #eee;
   background-color: transparent;
 }
 
@@ -96,7 +91,7 @@ li {
   border-radius: 2px;
 }
 ::-webkit-scrollbar-thumb {
-  background: rgba(0, 0, 0, 0.1);
+  background: rgba(46, 34, 34, 0.6);
   border-radius: 6px;
   cursor: pointer;
 }

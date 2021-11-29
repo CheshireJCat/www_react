@@ -17,7 +17,6 @@ const Blog: React.FC = () => {
             <Route path="create" element={<Suspense fallback={<Loading />}><LazyCreate /></Suspense>}></Route>
             <Route path="edit/:id" element={<Suspense fallback={<Loading />}><LazyEdit /></Suspense>}></Route>
         </Routes>
-        <GoBack />
     </>
 }
 

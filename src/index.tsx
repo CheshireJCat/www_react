@@ -35,6 +35,9 @@ const globalStyles = <GlobalStyles styles={createStyles((theme: Theme) => ({
     backgroundColor: theme.palette.primary.main,
     fontSize: 16
   },
+  "body.sbgc": {
+    backgroundColor: theme.palette.secondary.main,
+  },
   a: {
     color: theme.palette.secondary.main,
     ":visited,:link": {
