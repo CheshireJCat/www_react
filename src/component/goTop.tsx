@@ -42,7 +42,6 @@ function GoTop<T extends HTMLElement>({ scrollRef, sx }: Props<T>) {
             })
         }
     }
-    console.log(sx)
     return show ? <Fab color="primary" size="small" sx={{ ...sx }} onClick={scrollTop}>
         <ArrowUpward />
     </Fab> : null

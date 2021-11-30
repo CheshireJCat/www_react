@@ -2,6 +2,7 @@ import { Code, Email, GitHub, Message, Star } from "@mui/icons-material"
 import { Divider, List, ListItem, ListItemIcon, ListItemText, Paper, Typography } from "@mui/material"
 import { Box, styled } from "@mui/system"
 import CenterBody from "../layout/centerBody"
+import Qrcode from "@/files/qrcode.jpg"
 
 const Text = styled(ListItemText)`
     color: #000;
@@ -20,7 +21,7 @@ const About: React.FC = () => {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><Code /></ListItemIcon>
-                        <Text>Html / Typescript / React / Vue / Golang / Mysql </Text>
+                        <Text>Html / Javascript / Typescript / React / Vue / Go / Mysql</Text>
                     </ListItem>
                     <ListItem component="a" href="https://github.com/CheshireJCat">
                         <ListItemIcon><GitHub /></ListItemIcon>
@@ -32,7 +33,7 @@ const About: React.FC = () => {
                     </ListItem>
                     <ListItem>
                         <ListItemIcon><Message /></ListItemIcon>
-                        <Text>有事 / 聊天 / 交朋友 请尝试发邮件</Text>
+                        <img src={Qrcode} alt="微信" />WeChat
                     </ListItem>
                 </List>
             </Box>

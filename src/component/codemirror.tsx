@@ -3,15 +3,15 @@ import "codemirror/lib/codemirror.css"
 import "codemirror/theme/yonce.css"
 import React, { useEffect, useRef } from "react"
 
-const mobile =
-    typeof navigator === 'undefined' ||
-    navigator.userAgent.match(/android/i) ||
-    navigator.userAgent.match(/webos/i) ||
-    navigator.userAgent.match(/iphone/i) ||
-    navigator.userAgent.match(/ipad/i) ||
-    navigator.userAgent.match(/ipod/i) ||
-    navigator.userAgent.match(/blackberry/i) ||
-    navigator.userAgent.match(/windows phone/i)
+// const mobile =
+//     typeof navigator === 'undefined' ||
+//     navigator.userAgent.match(/android/i) ||
+//     navigator.userAgent.match(/webos/i) ||
+//     navigator.userAgent.match(/iphone/i) ||
+//     navigator.userAgent.match(/ipad/i) ||
+//     navigator.userAgent.match(/ipod/i) ||
+//     navigator.userAgent.match(/blackberry/i) ||
+//     navigator.userAgent.match(/windows phone/i)
 
 const CodeMirrorEditor: React.FC<{
     value: string;

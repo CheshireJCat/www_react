@@ -2,9 +2,10 @@ import { useDataBlogDetail } from "@/api/blog"
 import Empty from "@/component/empty";
 import GoTop from "@/component/goTop";
 import MarkdownShow from "@/component/markdownShow";
+import { CnzzTrackEvent } from "@/util/cnzz";
 import { Box, Container, Skeleton, Typography } from "@mui/material";
 import { styled } from "@mui/system";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useParams } from "react-router"
 import BlogInfo from "./infos";
 
@@ -65,12 +66,24 @@ const BlogDetail: React.FC = () => {
                             <ContentBox className="animate__animated animate__fadeIn">
                                 <MarkdownShow value={detail.Content}></MarkdownShow>
                             </ContentBox>
+                            <Cnzz Category={detail.Category} Title={detail.Title} Id={detail.Id} />
                         </div>
                 }
             </Container>
         </Box>
         <GoTop scrollRef={ref} sx={{ position: "fixed", bottom: { xs: 5, md: 60 }, right: { xs: 5, md: 16 }, zIndex: 11 }} />
     </>
+}
+
+const Cnzz: React.FC<{
+    Category: number;
+    Title: string;
+    Id: number;
+}> = ({ Category, Title, Id }) => {
+    useEffect(() => {
+        CnzzTrackEvent("博客详情页", Category.toString(), Title, Id)
+    }, [])
+    return null;
 }
 
 export default BlogDetail

@@ -8,7 +8,7 @@ export function getToken(): string {
 
 export function setToken(token = "") {
     if (!localStorage) return ""
-    if (!token || token == "logout") {
+    if (!token || token === "logout") {
         return localStorage.removeItem(key)
     }
     return localStorage.setItem(key, token)

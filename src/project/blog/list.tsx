@@ -4,7 +4,7 @@ import useLogined from "@/hook/useLogined"
 import { CnzzTrackEvent } from "@/util/cnzz"
 import { Add } from "@mui/icons-material"
 import { Button, Divider, Grid, Stack, Typography, Box } from "@mui/material"
-import { useEffect, useLayoutEffect } from "react"
+import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
 import { toast } from "react-toastify"
 import CenterBody from "../layout/centerBody"
@@ -17,8 +17,8 @@ const BlogList: React.FC = () => {
     const logined = useLogined()
 
     useEffect(() => {
-        CnzzTrackEvent("博客", "列表页", "分类id", parseInt(cid || ""))
-    }, [])
+        CnzzTrackEvent("博客列表页", !cid ? "all" : cid)
+    }, [cid])
 
     const deleteBlog = async (id: number) => {
         let { effectRows, msg } = await api_blogDelete(id)
