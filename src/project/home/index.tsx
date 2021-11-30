@@ -5,6 +5,7 @@ import { useState } from "react"
 import { Link } from "react-router-dom"
 import { useMediaQuery, useTheme } from '@mui/material';
 import Pendulum from "../pendulum"
+import { CnzzTrackEvent } from "@/util/cnzz"
 
 const Cover = styled(Grid)`
     background: url(${CoverSvg}) center center no-repeat;
@@ -62,7 +63,7 @@ const Home: React.FC = () => {
             <Stack direction={mobile ? "column" : "row"} spacing={2} alignItems="center">
                 {links.map(({ to, text, name, newPage }, index) => {
                     return <Link className="animate__animated animate__bounceIn" style={{ display: "inherit", animationDelay: `${index * 0.2}s` }} to={to} key={name} target={newPage ? "_blank" : ""}>
-                        <Button variant={name === "blog" ? "contained" : "outlined"} color="success">{text}</Button>
+                        <Button variant={name === "blog" ? "contained" : "outlined"} color="success"  onClick={() => CnzzTrackEvent("首页", "按钮", name)}>{text}</Button>
                     </Link>
                 })}
             </Stack>

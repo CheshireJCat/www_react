@@ -11,8 +11,9 @@ import useLoginCheck from "./hook/useloginCheck";
 import Logout from "./project/login/logout";
 import QuickNav from "./project/layout/quickNav";
 import Copyright from "./project/layout/copyright";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import Loading from "./component/loading";
+import CnzzInit from "./util/cnzz";
 
 const LazyBlog = lazy(() => import("@/project/blog"))
 
@@ -33,6 +34,9 @@ const routes = [{
 
 
 function App() {
+  useEffect(() => {
+    CnzzInit()
+  }, [])
   return (
     <>
       <BrowserRouter>

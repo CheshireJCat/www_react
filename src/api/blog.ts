@@ -1,3 +1,4 @@
+import { CnzzTrackEvent } from "@/util/cnzz";
 import { useEffect, useState } from "react";
 import request from "./request";
 
@@ -83,9 +84,11 @@ export function useDataBlogList(
 }
 
 export async function api_blogDetail(id: number): Promise<BlogDetail | null> {
+
   try {
     let res = await request(`/api/blog/detail/${id}`);
     if (res.code === 0) {
+      CnzzTrackEvent("博客", "列表页", res.Title || "", res.Id || 0)
       return res.data || null;
     }
     return null;
