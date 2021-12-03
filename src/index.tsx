@@ -33,6 +33,10 @@ const theme = createTheme({
 const globalStyles = <GlobalStyles styles={createStyles((theme: Theme) => ({
   body: {
     backgroundColor: theme.palette.primary.main,
+    backgroundImage: "url(https://source.unsplash.com/k5wnZWjIEZk)",
+    backgroundRepeat: "no-repeat",
+    backgroundPosition: "center center",
+    backgroundSize: "cover",
     fontSize: 16
   },
   "body.sbgc": {

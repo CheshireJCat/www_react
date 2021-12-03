@@ -7,11 +7,11 @@ import { useMediaQuery, useTheme } from '@mui/material';
 import Pendulum from "../pendulum"
 import { CnzzTrackEvent } from "@/util/cnzz"
 
-const Cover = styled(Grid)`
-    background: url(${CoverSvg}) center center no-repeat;
-    background-size: contain;
-    height: 100%;
-`
+// const Cover = styled(Grid)`
+//     background: url(${CoverSvg}) center center no-repeat;
+//     background-size: contain;
+//     height: 100%;
+// `
 
 const Slogan = styled(styled(Grid)`
     position: relative;
@@ -54,24 +54,27 @@ const Home: React.FC = () => {
     const [face, setFace] = useState(genFace())
     const theme = useTheme()
     const mobile = useMediaQuery(theme.breakpoints.down('md'));
-    return <Grid container height={"100%"} sx={{ px: { xs: 0, md: 10 } }}>
-        <Slogan item xs={12} md={8} >
+    return <>
+        <Grid container height={"100%"} sx={{ px: { xs: 0, md: 10 } }}>
             {!mobile && <Pendulum />}
-            <Box className="animate__animated animate__tada">
-                {face}
-            </Box>
-            <Stack direction={mobile ? "column" : "row"} spacing={2} alignItems="center">
-                {links.map(({ to, text, name, newPage }, index) => {
-                    return <Link className="animate__animated animate__bounceIn" style={{ display: "inherit", animationDelay: `${index * 0.2}s` }} to={to} key={name} target={newPage ? "_blank" : ""}>
-                        <Button variant={name === "blog" ? "contained" : "outlined"} color="success"  onClick={() => CnzzTrackEvent("首页", "按钮", name)}>{text}</Button>
-                    </Link>
-                })}
-            </Stack>
-        </Slogan>
-        <Grid item xs={12} md={4} onClick={() => setFace(genFace())} >
-            <Cover />
-        </Grid>
-    </Grid >
+            <Slogan item xs={12} md={8} >
+                <Box className="animate__animated animate__tada">
+                    {face}
+                </Box>
+                <iframe title="music" frameBorder="no" style={{ border: 0 }} marginWidth={0} marginHeight={0} width={330} height={86} src="https://music.163.com/outchain/player?type=2&id=632452&auto=1&height=66"></iframe>
+            </Slogan>
+            <Grid item xs={12} md={4} sx={{ position: "relative" }} onClick={() => setFace(genFace())} >
+                {/* <Cover /> */}
+                <Stack direction={mobile ? "column" : "row"} spacing={2} alignItems="center" sx={{ height: "100%", width: "100%", }}>
+                    {links.map(({ to, text, name, newPage }, index) => {
+                        return <Link className="animate__animated animate__bounceIn" style={{ display: "inherit", animationDelay: `${index * 0.2}s` }} to={to} key={name} target={newPage ? "_blank" : ""}>
+                            <Button variant={name === "blog" ? "contained" : "outlined"} color="success" onClick={() => CnzzTrackEvent("首页", "按钮", name)}>{text}</Button>
+                        </Link>
+                    })}
+                </Stack>
+            </Grid>
+        </Grid >
+    </>
 }
 
 export default Home

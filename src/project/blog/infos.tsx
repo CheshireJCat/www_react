@@ -17,7 +17,7 @@ const BlogInfo: React.FC<{
         </>}
         {updateTime && <>
             <Divider orientation="vertical" flexItem />
-            <Chip size="small" label={`更新：${createTime}`} />
+            <Chip size="small" label={`更新：${updateTime}`} />
         </>}
         {tags.length > 0 && <>
             <Divider orientation="vertical" flexItem />
