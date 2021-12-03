@@ -1,7 +1,6 @@
 import { api_logout } from "@/api/user"
 import { Button, Stack } from "@mui/material"
 import { useNavigate } from "react-router"
-import { toast } from "react-toastify"
 import CenterBody from "../layout/centerBody"
 
 const Logout = () => {
@@ -12,7 +11,7 @@ const Logout = () => {
                 navigate(-1)
                 return
             }
-            toast.error(errMsg)
+            console.error(errMsg)
         })
     }
 

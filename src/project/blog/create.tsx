@@ -10,7 +10,6 @@ import { Box, styled } from "@mui/system";
 import { useEffect, useState } from "react";
 import { Controller, useForm } from "react-hook-form";
 import { useNavigate } from "react-router";
-import { toast } from "react-toastify";
 
 const List = styled(Box)`
     margin: 10px;
@@ -46,21 +45,19 @@ const BlogCreate: React.FC<{
         const onSubmit = !edit ? handleSubmit(async (data) => {
             let { id = 0, msg } = await api_blogCreate(data);
             if (id) {
-                toast.success(msg)
                 const newTags = await api_tags()
                 update({ type: "update", payload: newTags })
                 navigate("/blog/list")
                 return
             }
-            toast.error(msg)
+            console.error(msg)
         }) : handleSubmit(async (data) => {
             let { effectRows, msg } = await api_blogEdit(data)
             if (effectRows < 0) {
-                toast.error(msg)
+                console.error(msg)
             } else if (effectRows === 0) {
-                toast.warn("无改动")
+                console.warn("无改动")
             } else {
-                toast.success(msg)
                 const newTags = await api_tags()
                 update({ type: "update", payload: newTags })
                 navigate(`/blog/detail/${data.id}`)

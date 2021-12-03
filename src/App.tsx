@@ -1,6 +1,4 @@
 import "./style/index.css"
-import "react-toastify/dist/ReactToastify.min.css";
-import { ToastContainer } from "react-toastify";
 import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { TransitionGroup, CSSTransition } from "react-transition-group"
 
@@ -38,24 +36,16 @@ function App() {
     CnzzInit()
   }, [])
   return (
-    <>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />}></Route>
-          <Route path="/logout" element={<Logout />}></Route>
-        </Routes>
-        <Page />
-        {/* <PageAnimate /> */}
-        <Copyright />
-        <QuickNav />
-      </BrowserRouter>
-      <ToastContainer
-        hideProgressBar={false}
-        position="top-right"
-        autoClose={2000}
-        limit={3}
-      />
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />}></Route>
+        <Route path="/logout" element={<Logout />}></Route>
+      </Routes>
+      <Page />
+      {/* <PageAnimate /> */}
+      <Copyright />
+      <QuickNav />
+    </BrowserRouter>
   );
 }
 

@@ -1,7 +1,6 @@
 import { api_login } from "@/api/user"
 import { useState } from "react"
 import { useNavigate } from "react-router"
-import { toast } from "react-toastify"
 
 import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
@@ -21,10 +20,9 @@ export function SignInSide() {
         api_login(email, password).then(errMsg => {
             if (!errMsg) {
                 navigate(-1)
-                toast.success("登录成功")
                 return
             }
-            toast.error(errMsg)
+            console.error(errMsg)
         })
     }
 

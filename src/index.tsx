@@ -2,14 +2,11 @@ import React from 'react';
 import { render, hydrate } from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-
 import "animate.css"
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, GlobalStyles, Theme } from '@mui/material';
 import { createStyles } from '@mui/styles';
 import "normalize.css/normalize.css"
-import { useApiTags } from "@/api/tag";
-import TagProvider from './hook/useTags';
 
 const theme = createTheme({
   palette: {
@@ -51,29 +48,22 @@ const globalStyles = <GlobalStyles styles={createStyles((theme: Theme) => ({
   }
 }))} />
 
-const Page = () => {
-  const [loading, tags] = useApiTags()
-  return loading ? null : <TagProvider tags={tags}>
-    <App />
-  </TagProvider >
-}
-
 const rootElement = document.getElementById('root');
 
 const Root = () => (<React.StrictMode>
   <ThemeProvider theme={theme}>
     <CssBaseline />
     {globalStyles}
-    <Page />
+    <App />
   </ThemeProvider>
 </React.StrictMode>)
 
-if (rootElement?.hasChildNodes()) {
-  hydrate(<Root />, rootElement);
-} else {
-  render(<Root />, rootElement);
-}
+// if (rootElement?.hasChildNodes()) {
+//   hydrate(<Root />, rootElement);
+// } else {
 
+// }
+render(<Root />, rootElement);
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

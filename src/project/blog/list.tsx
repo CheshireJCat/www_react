@@ -7,7 +7,6 @@ import { Add } from "@mui/icons-material"
 import { Button, Divider, Grid, Stack, Typography, Box } from "@mui/material"
 import { useEffect } from "react"
 import { Link, useParams } from "react-router-dom"
-import { toast } from "react-toastify"
 import CenterBody from "../layout/centerBody"
 import CategoryNavs, { CategoryNavsDraw } from "./categoryNavs"
 import ListCard from "./listCard"
@@ -16,7 +15,7 @@ const BlogList: React.FC = () => {
     const { cid } = useParams()
     const [loading, list, setList, loadMore] = useDataBlogList(cid)
     const logined = useLogined();
-    
+
     useTitle("博客");
 
     useEffect(() => {
@@ -26,21 +25,20 @@ const BlogList: React.FC = () => {
     const deleteBlog = async (id: number) => {
         let { effectRows, msg } = await api_blogDelete(id)
         if (effectRows < 0) {
-            toast.error(msg)
+            console.error(msg)
         } else if (effectRows === 0) {
-            toast.warn("不存在此文章")
+            console.warn("不存在此文章")
         } else {
             setList(prev => prev.filter(({ Id }) => Id !== id))
-            toast.success(msg)
         }
     }
 
     const updateBlog = async (id: number, status: number) => {
         let { effectRows, msg } = await api_blogUpdateStatus(id, status)
         if (effectRows < 0) {
-            toast.error(msg)
+            console.error(msg)
         } else if (effectRows === 0) {
-            toast.warn("状态未改变")
+            console.warn("状态未改变")
         } else {
             setList(prev => {
                 let res = prev.slice()
@@ -51,7 +49,6 @@ const BlogList: React.FC = () => {
                 })
                 return res
             })
-            toast.success(msg)
         }
     }
 
