@@ -10,15 +10,16 @@ html {
 }
 
 body {
-  cursor: url("../files/mouse.ico"), auto;
+  cursor: url("../files/c1.cur"), auto;
   background-image: url(https://source.unsplash.com/k5wnZWjIEZk);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: cover;
   font-size: 16px;
 }
-a {
-  cursor: url("../files/c1.cur"), auto;
+a,
+button {
+  cursor: url("../files/mouse.ico"), auto;
 }
 
 ul,

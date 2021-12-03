@@ -8,7 +8,7 @@ import BlogCreate from "./create";
 const BlogEdit: React.FC = () => {
     const { id = 0 } = useParams()
     const [TagMap] = useTags()
-    const [loading, detail] = useDataBlogDetail(+id > 0 ? +id : 0);
+    const [loading, detail] = useDataBlogDetail(+id > 0 ? +id : 0, true);
     return loading ? <Loading /> : !detail ? <Empty /> : <BlogCreate edit={true} defaultValue={{
         id: detail.Id,
         title: detail.Title,

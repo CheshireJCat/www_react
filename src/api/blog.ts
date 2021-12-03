@@ -1,16 +1,50 @@
 import { useEffect, useState } from "react";
 import request from "./request";
 
-export async function api_blogList(
-  page = 1,
-  category?: string
-): Promise<{
+class ApiCache<T, P> {
+  cache: Map<T, {
+    time: number;
+    data: P
+  }>;
+  constructor() {
+    this.cache = new Map()
+  }
+  get(key: T): (P | null) {
+    let item = this.cache.get(key);
+    if (!item) return null;
+    // 过期了
+    if (+new Date() - item.time > 5 * 60 * 1000) {
+      return null
+    }
+    return item.data
+  }
+  set(key: T, data: P) {
+    this.cache.set(key, {
+      time: +new Date(),
+      data
+    })
+  }
+}
+
+type ListRes = {
   list: BlogListItem[];
   page: number;
   size: number;
   total: number;
   totalPage: number;
-}> {
+}
+
+const listCache = new ApiCache<string, ListRes>()
+export async function api_blogList({ page = 1, category, fresh = false }: {
+  page?: number;
+  category?: string;
+  fresh?: boolean
+}): Promise<ListRes> {
+  let cacheKey = `${category || 'all'}-${page}`;
+  if (!fresh) {
+    let resCache = listCache.get(cacheKey);
+    if (resCache) return resCache;
+  }
   let empty = {
     list: [],
     page: 0,
@@ -27,7 +61,11 @@ export async function api_blogList(
       data,
     });
     if (res.code === 0) {
-      return { ...empty, ...res.data };
+      let newCache: ListRes = { ...empty, ...res.data };
+      if (newCache.list.length) {
+        listCache.set(cacheKey, newCache)
+      }
+      return newCache;
     }
     return empty;
   } catch (error) {
@@ -35,8 +73,10 @@ export async function api_blogList(
   }
 }
 
+
 export function useDataBlogList(
-  categoryId?: string
+  categoryId?: string,
+  fresh?: boolean
 ): [
     boolean,
     BlogListItem[],
@@ -69,7 +109,11 @@ export function useDataBlogList(
   async function getData(loadPage = 1) {
     if (loading) return;
     setLoading(true);
-    let res = await api_blogList(loadPage, categoryId);
+    let res = await api_blogList({
+      page: loadPage,
+      category: categoryId,
+      fresh
+    });
     let { list, page, totalPage } = res;
     setLoading(false);
     setList((prev) => {
@@ -82,11 +126,16 @@ export function useDataBlogList(
   return [loading, list, setList, loadMore];
 }
 
-export async function api_blogDetail(id: number): Promise<BlogDetail | null> {
-
+const detailCache = new ApiCache<number, BlogDetail>()
+export async function api_blogDetail(id: number, fresh?: boolean): Promise<BlogDetail | null> {
+  if (!fresh) {
+    let data = detailCache.get(id);
+    if (data) return data;
+  }
   try {
     let res = await request(`/api/blog/detail/${id}`);
     if (res.code === 0) {
+      res.data && detailCache.set(id, res.data);
       return res.data || null;
     }
     return null;
@@ -95,12 +144,12 @@ export async function api_blogDetail(id: number): Promise<BlogDetail | null> {
   }
 }
 
-export function useDataBlogDetail(id: number): [boolean, BlogDetail | null] {
+export function useDataBlogDetail(id: number, fresh = false): [boolean, BlogDetail | null] {
   const [loading, setLoading] = useState(true);
   const [res, setRes] = useState<BlogDetail | null>(null);
   useEffect(() => {
     async function getData() {
-      let res = await api_blogDetail(id);
+      let res = await api_blogDetail(id, fresh);
       setRes(res);
       setLoading(false);
     }

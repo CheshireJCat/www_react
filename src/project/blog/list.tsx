@@ -12,9 +12,9 @@ import CategoryNavs, { CategoryNavsDraw } from "./categoryNavs"
 import ListCard from "./listCard"
 
 const BlogList: React.FC = () => {
-    const { cid } = useParams()
-    const [loading, list, setList, loadMore] = useDataBlogList(cid)
+    const { cid } = useParams();
     const logined = useLogined();
+    const [loading, list, setList, loadMore] = useDataBlogList(cid, logined)
 
     useTitle("博客");
 

@@ -1,6 +1,7 @@
 import { useDataBlogDetail } from "@/api/blog"
 import Empty from "@/component/empty";
 import GoTop from "@/component/goTop";
+import useLogined from "@/hook/useLogined";
 import useTitle from "@/hook/useTitle";
 import { CnzzTrackEvent } from "@/util/cnzz";
 import { Box, Container, Skeleton, Typography } from "@mui/material";
@@ -46,7 +47,8 @@ const Thumb = styled(Box)`
 
 const BlogDetail: React.FC = () => {
     const { id = 0 } = useParams()
-    const [loading, detail] = useDataBlogDetail(+id > 0 ? +id : 0);
+    const logined = useLogined()
+    const [loading, detail] = useDataBlogDetail(+id > 0 ? +id : 0, logined);
     const thumb = detail?.Thumb || "";
     const ref = useRef<HTMLDivElement>(null);
 
