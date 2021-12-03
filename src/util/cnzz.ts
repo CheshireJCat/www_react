@@ -17,7 +17,6 @@ export default function CnzzInit() {
  * @param value 
  */
 export function CnzzTrackEvent(page: string, action: string, label = "", value = 0) {
-    console.log(page, action, label, value)
     var _czc = (window as any)._czc || [];
     _czc.push(['_trackEvent', page, action, label, value])
 }

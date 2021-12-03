@@ -5,6 +5,7 @@ import { Link } from "react-router-dom"
 import { useMediaQuery, useTheme } from '@mui/material';
 import Pendulum from "../pendulum"
 import { CnzzTrackEvent } from "@/util/cnzz"
+import useTitle from "@/hook/useTitle";
 
 // const Cover = styled(Grid)`
 //     background: url(${CoverSvg}) center center no-repeat;
@@ -53,6 +54,7 @@ const Home: React.FC = () => {
     const [face, setFace] = useState(genFace())
     const theme = useTheme()
     const mobile = useMediaQuery(theme.breakpoints.down('md'));
+    useTitle()
     return <>
         <Grid container height={"100%"} sx={{ px: { xs: 0, md: 10 } }}>
             {!mobile && <Pendulum />}

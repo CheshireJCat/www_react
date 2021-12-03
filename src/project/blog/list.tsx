@@ -1,6 +1,7 @@
 import { api_blogDelete, api_blogUpdateStatus, useDataBlogList } from "@/api/blog"
 import Empty from "@/component/empty"
 import useLogined from "@/hook/useLogined"
+import useTitle from "@/hook/useTitle"
 import { CnzzTrackEvent } from "@/util/cnzz"
 import { Add } from "@mui/icons-material"
 import { Button, Divider, Grid, Stack, Typography, Box } from "@mui/material"
@@ -14,7 +15,9 @@ import ListCard from "./listCard"
 const BlogList: React.FC = () => {
     const { cid } = useParams()
     const [loading, list, setList, loadMore] = useDataBlogList(cid)
-    const logined = useLogined()
+    const logined = useLogined();
+    
+    useTitle("博客");
 
     useEffect(() => {
         CnzzTrackEvent("博客列表页", !cid ? "all" : cid)

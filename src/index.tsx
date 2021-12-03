@@ -1,7 +1,6 @@
 import React from 'react';
-// import ReactDOM from 'react-dom';
+import { render, hydrate } from 'react-dom';
 import App from './App';
-import { render } from 'react-snapshot';
 import reportWebVitals from './reportWebVitals';
 
 import "animate.css"
@@ -59,17 +58,21 @@ const Page = () => {
   </TagProvider >
 }
 
-// ReactDOM.render(
-render(
-  <React.StrictMode>
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
-      {globalStyles}
-      <Page />
-    </ThemeProvider>
-  </React.StrictMode>,
-  document.getElementById('root')
-);
+const rootElement = document.getElementById('root');
+
+const Root = () => (<React.StrictMode>
+  <ThemeProvider theme={theme}>
+    <CssBaseline />
+    {globalStyles}
+    <Page />
+  </ThemeProvider>
+</React.StrictMode>)
+
+if (rootElement?.hasChildNodes()) {
+  hydrate(<Root />, rootElement);
+} else {
+  render(<Root />, rootElement);
+}
 
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))

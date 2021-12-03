@@ -3,12 +3,15 @@ import { Divider, List, ListItem, ListItemIcon, ListItemText, Paper, Typography 
 import { Box, styled } from "@mui/system"
 import CenterBody from "../layout/centerBody"
 import Qrcode from "@/files/qrcode.jpg"
+import useTitle from "@/hook/useTitle"
 
 const Text = styled(ListItemText)`
     color: #000;
 `
 
 const About: React.FC = () => {
+    useTitle("关于我");
+    
     return <CenterBody sx={{ py: 3 }}>
         <Paper sx={{ background: `url("https://source.unsplash.com/900x1600/?cat") no-repeat center`, backgroundSize: "cover", height: "100%" }}>
             <Box sx={{ p: 2, background: 'rgba(255,255,255,.8)', height: "100%", overflow: "auto" }}>
