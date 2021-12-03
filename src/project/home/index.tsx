@@ -1,4 +1,3 @@
-import CoverSvg from "@/files/svg/undraw_lost_online_re_upmy.svg"
 import { Button, Grid, Stack } from "@mui/material"
 import { Box, styled } from "@mui/system"
 import { useState } from "react"

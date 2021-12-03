@@ -11,7 +11,7 @@ module.exports = override(
     "@": path.resolve(__dirname, "./src"),
   }),
   addWebpackModuleRule({
-    test: /\.(jpg|png|gif)$/,
+    test: /\.(jpg|png|gif|ico|cur)$/,
     use: [{ loader: "url-loader", options: { esModule: false } }],
   })
 );

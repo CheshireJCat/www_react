@@ -1,6 +1,7 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
+// import ReactDOM from 'react-dom';
 import App from './App';
+import { render } from 'react-snapshot';
 import reportWebVitals from './reportWebVitals';
 
 import "animate.css"
@@ -33,11 +34,6 @@ const theme = createTheme({
 const globalStyles = <GlobalStyles styles={createStyles((theme: Theme) => ({
   body: {
     backgroundColor: theme.palette.primary.main,
-    backgroundImage: "url(https://source.unsplash.com/k5wnZWjIEZk)",
-    backgroundRepeat: "no-repeat",
-    backgroundPosition: "center center",
-    backgroundSize: "cover",
-    fontSize: 16
   },
   "body.sbgc": {
     backgroundColor: theme.palette.secondary.main,
@@ -63,7 +59,8 @@ const Page = () => {
   </TagProvider >
 }
 
-ReactDOM.render(
+// ReactDOM.render(
+render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <CssBaseline />
