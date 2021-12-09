@@ -10,16 +10,21 @@ import Paper from '@mui/material/Paper';
 import Box from '@mui/material/Box';
 import Grid from '@mui/material/Grid';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
+import { useAppDispatch } from "@/hook";
+import { AppDispatch } from "@/store";
+import { login as logined } from "@/store/loginInfo"
 
 export function SignInSide() {
     const navigate = useNavigate();
     const [email, setEmail] = useState("1234@qq.com");
     const [password, setPassword] = useState("12345678");
+    const dispatch: AppDispatch = useAppDispatch()
 
     const login = function () {
         api_login(email, password).then(errMsg => {
             if (!errMsg) {
-                navigate(-1)
+                dispatch(logined())
+                navigate("/blog/list", { replace: true })
                 return
             }
             console.error(errMsg)

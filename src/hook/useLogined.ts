@@ -1,11 +1,8 @@
-import { getToken } from "@/api/token";
-import { useEffect, useState } from "react";
+import { RootState } from "@/store";
+import { useAppSelector } from ".";
 
-const useLogined = () => {
-  const [logined, setLogined] = useState(false);
-  useEffect(() => {
-    setLogined(!!getToken());
-  }, []);
+const useLogined = (): boolean => {
+  const logined = useAppSelector((state: RootState) => state.login.logined)
   return logined;
 };
 

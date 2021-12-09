@@ -7,6 +7,8 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { CssBaseline, GlobalStyles, Theme } from '@mui/material';
 import { createStyles } from '@mui/styles';
 import "normalize.css/normalize.css"
+import { Provider } from 'react-redux';
+import store from "@/store"
 
 const theme = createTheme({
   palette: {
@@ -54,7 +56,9 @@ const Root = () => (<React.StrictMode>
   <ThemeProvider theme={theme}>
     <CssBaseline />
     {globalStyles}
-    <App />
+    <Provider store={store}>
+      <App />
+    </Provider>
   </ThemeProvider>
 </React.StrictMode>)
 

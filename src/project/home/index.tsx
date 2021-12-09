@@ -72,6 +72,9 @@ const Home: React.FC = () => {
                             <Button variant={name === "blog" ? "contained" : "outlined"} color="success" onClick={() => CnzzTrackEvent("首页", "按钮", name)}>{text}</Button>
                         </Link>
                     })}
+                    <a className="animate__animated animate__bounceIn" style={{ display: "inherit", animationDelay: `${3 * 0.2}s` }} rel="noreferrer" href="https://cheshirejcat.github.io/mmd/" key="mmd" target="_blank">
+                        <Button variant="outlined" color="success" onClick={() => CnzzTrackEvent("首页", "按钮", "mmd")}>好康的</Button>
+                    </a>
                 </Stack>
             </Grid>
         </Grid >
