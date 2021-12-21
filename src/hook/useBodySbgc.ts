@@ -13,9 +13,11 @@ export const useBodyBgImg = (url: string) => {
     useEffect(() => {
         if (url) {
             document.body.style.backgroundImage = `url(${url})`;
+        } else {
+            document.body.style.backgroundImage = `none`;
         }
         return () => {
-            document.body.style.backgroundImage = "";
+            document.body.style.backgroundImage = "none";
         }
     }, [])
 }

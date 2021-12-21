@@ -3,7 +3,7 @@ import { api_tags } from "@/api/tag";
 import MarkdownEditor from "@/component/markdownEditor";
 import { blogStatus } from "@/config/blogStatus";
 import categories from "@/config/category";
-import useBodySbgc from "@/hook/useBodySbgc";
+import useBodySbgc, { useBodyBgImg } from "@/hook/useBodySbgc";
 import { useTags } from "@/hook/useTags";
 import { Button, Container, FormControl, FormControlLabel, Link, Radio, RadioGroup, TextField } from "@mui/material";
 import { Box, styled } from "@mui/system";
@@ -32,6 +32,7 @@ const BlogCreate: React.FC<{
     tags: ""
 } }) => {
         useBodySbgc()
+        useBodyBgImg("")
         const navigate = useNavigate()
         const [, update] = useTags()
         const { setValue, handleSubmit, control } = useForm({
